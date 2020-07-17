@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.shivankshi.emscrud.dao.EmployeeRepository;
 import com.shivankshi.emscrud.entity.Employee;
@@ -48,15 +48,42 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employee;
 	}
 
-	@Override
-	public void save(Employee theEmployee) {
-		employeeRepository.save(theEmployee);
-
-	}
+//	@Override
+//	public Employee save(Employee theEmployee) {
+//		return employeeRepository.save(theEmployee);
+//
+//	}
 
 	@Override
 	public void deleteById(int theId) {
 		employeeRepository.deleteById(theId);
 	}
+
+
+
+@Override
+public Employee addEmployee(Employee employee) {
+	
+	return employeeRepository.save(employee);
+}
+
+
+
+@Override
+public Employee updateEmployee(int empId, int salary, String designation) {
+	Optional<Employee> employeeFromDb=employeeRepository.findById(empId);
+	Employee employee=null;
+	if(employeeFromDb.isPresent())
+	{
+		employee=employeeFromDb.get();
+		employee.setSalary(salary);
+		employee.setDesignation(designation);
+	}
+	else {
+		throw new RuntimeException("Employee id not found");
+	}
+	
+	return employee;
+}
 
 }

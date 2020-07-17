@@ -53,18 +53,22 @@ public class EmployeeRestController {
 		//if explicitly id is passed, set it to zero to force a save of new item instead of update
 		
 		theEmployee.setId(0);
-		employeeService.save(theEmployee);
-		return theEmployee;
+		
+		return employeeService.addEmployee(theEmployee);
 	}
 	
-	
-	@PutMapping("/employees")
-	
-	public Employee updateEmployee(@RequestBody Employee theEmployee)
+
+	@PutMapping("/employees/{empId}/salary/{newSalary}/designation/{newDesignation}")
+	public Employee updateEmployee(@PathVariable("empId")int empId,@PathVariable("newSalary")int newSalary,@PathVariable("newDesignation")String newDesignation)
 	{
-		employeeService.save(theEmployee);
-		return theEmployee;
+		return employeeService.updateEmployee(empId,newSalary,newDesignation);
 	}
+	
+//	public Employee updateEmployee(@RequestBody Employee theEmployee)
+//	{
+//		
+//		return employeeService.save(theEmployee);
+//	}
 	
 	@DeleteMapping("/employees/{empId}")
 	

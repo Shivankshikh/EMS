@@ -10,8 +10,12 @@ public List<Employee> getEmployees();
 	
 	public Employee findById(int theId);
 	
-	public void save(Employee theEmployee);
+	public Employee addEmployee(Employee employee);
+	
+	public Employee updateEmployee(int empId, int salary, String designation);
 	
 	public void deleteById(int theId);
+	
+	
 
 }
