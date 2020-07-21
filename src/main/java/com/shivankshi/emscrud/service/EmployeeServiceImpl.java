@@ -19,7 +19,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
 	public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-		//bean id due to conflict in DAO implementation
+		
 		this.employeeRepository = employeeRepository;
 	}
 	
@@ -48,11 +48,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employee;
 	}
 
-//	@Override
-//	public Employee save(Employee theEmployee) {
-//		return employeeRepository.save(theEmployee);
-//
-//	}
 
 	@Override
 	public void deleteById(int theId) {
@@ -61,29 +56,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
 
-@Override
-public Employee addEmployee(Employee employee) {
-	
-	return employeeRepository.save(employee);
-}
-
-
-
-@Override
-public Employee updateEmployee(int empId, int salary, String designation) {
-	Optional<Employee> employeeFromDb=employeeRepository.findById(empId);
-	Employee employee=null;
-	if(employeeFromDb.isPresent())
-	{
-		employee=employeeFromDb.get();
-		employee.setSalary(salary);
-		employee.setDesignation(designation);
+	@Override
+	public Employee addEmployee(Employee employee) {
+		
+		return employeeRepository.save(employee);
 	}
-	else {
-		throw new RuntimeException("Employee id not found");
+
+
+
+	@Override
+	public Employee updateEmployee(int empId, Employee employee) {
+		Optional<Employee> employeeFromDb=employeeRepository.findById(empId);
+		Employee employee2=null;
+		if(employeeFromDb.isPresent())
+		{
+			employee2=employeeFromDb.get();
+			employee2.setDesignation(employee.getDesignation());
+			employee2.setSalary(employee.getSalary());
+		}
+		else {
+			throw new RuntimeException("Employee id not found");
+		}
+		
+		return employee2;
 	}
-	
-	return employee;
-}
 
 }

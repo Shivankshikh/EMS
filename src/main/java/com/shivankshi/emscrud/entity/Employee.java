@@ -16,19 +16,19 @@ public class Employee {
 	@Column(name = "id")//to map these fields with the database columns
 	private int id;
 	
-	@Column(name="first_name")
+	@Column(name="first_name",nullable = false)
 	private String firstName;
 	
-	@Column(name="last_name")
+	@Column(name="last_name",nullable = false)
 	private String lastName;
 	
-	@Column(name = "email")
+	@Column(name = "email",unique = true)
 	private String email;
 	
-	@Column(name="salary")
+	@Column(name="salary",nullable = false)
 	private int salary;
 	
-	@Column(name="designation")
+	@Column(name="designation",nullable = false)
 	private String designation;
 
 	
