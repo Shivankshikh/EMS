@@ -77,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		else {
 			throw new RuntimeException("Employee id not found");
 		}
-		
+		employeeRepository.save(employee2);
 		return employee2;
 	}
 
