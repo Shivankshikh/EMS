@@ -2,8 +2,10 @@ package com.shivankshi.emscrud.service;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.shivankshi.emscrud.dao.EmployeeRepository;
 import com.shivankshi.emscrud.entity.Employee;
 
@@ -31,8 +33,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = null;
 		if (result.isPresent()) {
 			employee = result.get();
-		} else {
-			throw new RuntimeException("Employee id not found");
 		}
 		return employee;
 	}
