@@ -2,11 +2,6 @@ package com.shivankshi.emscrud.rest;
 
 public class EmployeeNotFoundException extends RuntimeException {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public EmployeeNotFoundException(String message, Throwable cause) {
 		super(message, cause);
 
@@ -19,6 +14,7 @@ public class EmployeeNotFoundException extends RuntimeException {
 
 	public EmployeeNotFoundException(Throwable cause) {
 		super(cause);
+
 	}
 
 }
