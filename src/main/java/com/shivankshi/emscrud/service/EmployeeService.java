@@ -12,9 +12,11 @@ public List<Employee> getEmployees();
 	
 	public Employee addEmployee(Employee employee);
 	
-	public Employee updateEmployee(int empId, int salary, String designation);
+	//public Employee updateEmployee(int empId, int salary, String designation);
 	
 	public void deleteById(int theId);
+	
+	public Employee updateEmployee(int empId,Employee employee);
 	
 	
 
