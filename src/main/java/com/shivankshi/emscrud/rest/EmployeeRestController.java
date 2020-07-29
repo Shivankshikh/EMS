@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 
 @RestController
-@RequestMapping("/api") // base mapping
+@RequestMapping("/api")
 public class EmployeeRestController {
 
 	private EmployeeService employeeService;

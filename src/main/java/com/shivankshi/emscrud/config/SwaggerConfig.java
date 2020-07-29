@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -27,41 +26,29 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
 	@Bean
-	public Docket swaggerConfiguration()
-	{
+	public Docket swaggerConfiguration() {
 		List<SecurityScheme> schemeList = new ArrayList<>();
-	    schemeList.add(new BasicAuth("BasicAuth"));
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.paths(PathSelectors.ant("/api/employees/**"))
-				.apis(RequestHandlerSelectors.basePackage("com.shivankshi"))
-				.build()
-				.apiInfo(apiDetails())
+		schemeList.add(new BasicAuth("BasicAuth"));
+		return new Docket(DocumentationType.SWAGGER_2).select().paths(PathSelectors.ant("/api/employees/**"))
+				.apis(RequestHandlerSelectors.basePackage("com.shivankshi")).build().apiInfo(apiDetails())
 				.securitySchemes(schemeList).securityContexts(Arrays.asList(securityContext()));
-		
-		
+
 	}
-	
-	private ApiInfo apiDetails()
-	{
-		return new ApiInfo("Employee Management System API Documentation",
-				"Sample Api for EMS", 
-				"1.0",
-				"Free to use", 
-				new springfox.documentation.service.Contact("Shivankshi Khandelwal","http://springio","shivankshi.khandelwal@wisse.com"),
-				"API License",
-				"\"http://springio\"",
-				Collections.emptyList());
+
+	private ApiInfo apiDetails() {
+		return new ApiInfo("Employee Management System API Documentation", "Sample Api for EMS", "1.0", "Free to use",
+				new springfox.documentation.service.Contact("Shivankshi Khandelwal", "http://springio",
+						"shivankshi.khandelwal@wisse.com"),
+				"API License", "\"http://springio\"", Collections.emptyList());
+
 	}
-	
-	
-	private SecurityContext securityContext()
-	{
-	    return SecurityContext.builder().forPaths(PathSelectors.any()).build();
-	 }
-	
+
+	private SecurityContext securityContext() {
+		return SecurityContext.builder().forPaths(PathSelectors.any()).build();
+	}
+
 	@Bean
-	  public SecurityConfiguration security() {
-	    return SecurityConfigurationBuilder.builder().useBasicAuthenticationWithAccessCodeGrant(true).build();
-	  }
+	public SecurityConfiguration security() {
+		return SecurityConfigurationBuilder.builder().useBasicAuthenticationWithAccessCodeGrant(true).build();
+	}
 }
