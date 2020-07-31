@@ -3,13 +3,18 @@ package com.shivankshi.emscrud.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.GrantedAuthority;
+
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtUtil {
@@ -35,15 +40,25 @@ public class JwtUtil {
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
+//    public String generateToken(Authentication authentication) {
+//        final String authorities = authentication.getAuthorities().stream()
+//                .map(GrantedAuthority::getAuthority)
+//                .collect(Collectors.joining(","));
+//        return Jwts.builder()
+//                .setSubject(authentication.getName())
+//                .claim(AUTHORITIES_KEY, authorities)
+//                .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
+//                .setIssuedAt(new Date(System.currentTimeMillis()))
+//                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS*1000))
+//                .compact();
+//    }
 
-    public String generateToken(String username) {
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
-    }
-
-    private String createToken(Map<String, Object> claims, String subject) {
-
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+    public String generateToken(Authentication authentication) {
+        final String authorities= authentication.getAuthorities().stream()
+        		.map(GrantedAuthority::getAuthority)
+        		.collect(Collectors.joining(","));
+        
+       return Jwts.builder().setSubject(authentication.getName()).claim("scopes", authorities).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }

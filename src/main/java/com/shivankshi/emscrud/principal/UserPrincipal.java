@@ -2,17 +2,20 @@ package com.shivankshi.emscrud.principal;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+//import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+//import com.shivankshi.emscrud.entity.Role;
 import com.shivankshi.emscrud.entity.User;
 
 public class UserPrincipal implements UserDetails {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private User user;
 	
@@ -23,9 +26,14 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-
-		return new ArrayList<>();
-			//return Collections.singleton(new SimpleGrantedAuthority("USER"));
+		Set<GrantedAuthority> authorities = new HashSet<>();
+		user.getRoles().forEach(role -> {
+			
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+		});
+		return authorities;
+		
+			
 		
 	}
 

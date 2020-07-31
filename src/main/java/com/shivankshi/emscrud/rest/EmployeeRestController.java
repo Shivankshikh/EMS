@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shivankshi.emscrud.service.EmployeeService;
 import com.shivankshi.emscrud.entity.Employee;
+import com.shivankshi.emscrud.service.EmployeeService;
 
 @RestController
-@RequestMapping("/api") //base mapping
+@RequestMapping("/api")
 public class EmployeeRestController {
 
 	private EmployeeService employeeService;
@@ -25,70 +25,45 @@ public class EmployeeRestController {
 	public EmployeeRestController(EmployeeService employeeService) {
 		this.employeeService = employeeService;
 	}
-	
+
 	@GetMapping("/employees")
-	
-	public List<Employee> getEmployees()
-	{
-			return employeeService.getEmployees();
+	public List<Employee> getEmployees() {
+		return employeeService.getEmployees();
 	}
-	
-	
+
 	@GetMapping("/employees/{empId}")
-	public Employee getEmployee(@PathVariable int empId)
-	{
-		Employee theEmployee =employeeService.findById(empId);
-		if(theEmployee==null)
-		{
-			throw new RuntimeException("Employee not found with id- "+empId);
+	public Employee getEmployee(@PathVariable int empId) {
+		Employee theEmployee = employeeService.findById(empId);
+		if (theEmployee == null) {
+			throw new RuntimeException("Employee not found with id- " + empId);
 		}
 		return theEmployee;
 	}
-	
+
 	@PostMapping("/employees")
-	public Employee addEmployee(@RequestBody Employee theEmployee)
-	{
-		//RequestBody for binding json data with Employee object
-		
-		//if explicitly id is passed, set it to zero to force a save of new item instead of update
-		
+	public Employee addEmployee(@RequestBody Employee theEmployee) {
+
 		theEmployee.setId(0);
-		
+
 		return employeeService.addEmployee(theEmployee);
 	}
-	
 
-	@PutMapping("/employees/{empId}/salary/{newSalary}/designation/{newDesignation}")
-	public Employee updateEmployee(@PathVariable("empId")int empId,@PathVariable("newSalary")int newSalary,@PathVariable("newDesignation")String newDesignation)
-	{
-		return employeeService.updateEmployee(empId,newSalary,newDesignation);
+	@PutMapping("/employees/{empId}")
+	public Employee updateEmployee(@PathVariable("empId") int empId, @RequestBody Employee theEmployee) {
+
+		return employeeService.updateEmployee(empId, theEmployee);
 	}
-	
-//	public Employee updateEmployee(@RequestBody Employee theEmployee)
-//	{
-//		
-//		return employeeService.save(theEmployee);
-//	}
-	
+
 	@DeleteMapping("/employees/{empId}")
-	
-	public String deleteEmployee(@PathVariable int empId)
-	{
-		Employee tEmployee= employeeService.findById(empId);
-		if(tEmployee==null)
-		{
+	public String deleteEmployee(@PathVariable int empId) {
+		Employee tEmployee = employeeService.findById(empId);
+		if (tEmployee == null) {
 			throw new RuntimeException("Employee not found");
 		}
-		
-		employeeService.deleteById(empId);
-		
-		return "employee deleted with id "+empId;
-	}
-	
-	
-	
-	
 
-	
-	
+		employeeService.deleteById(empId);
+
+		return "employee deleted with id " + empId;
+	}
+
 }
