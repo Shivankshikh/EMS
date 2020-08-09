@@ -12,8 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.shivankshi.emscrud.service.CustomUserDetailsService;
@@ -36,9 +34,9 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-    public BCryptPasswordEncoder encoder(){
-        return new BCryptPasswordEncoder();
-    }
+	public BCryptPasswordEncoder encoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
 	@Override
@@ -48,11 +46,14 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/authenticate","/signup").permitAll().anyRequest().authenticated()
-				.and().exceptionHandling().and().sessionManagement()
+		http.csrf().disable().authorizeRequests()
+				.antMatchers("/authenticate", "/signup", "/v2/api-docs", "/swagger-resources/configuration/ui",
+						"/swagger-resources/configuration/security", "/swagger-resources", "/swagger-ui.html",
+						"/webjars/**", "/favicon.ico", "/graphql/**", "/graphiql/**", "/subscriptions/**", "/vendor/**")
+				.permitAll().anyRequest().authenticated().and().exceptionHandling().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-		
+
 	}
 
 }

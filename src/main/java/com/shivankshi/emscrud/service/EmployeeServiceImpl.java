@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.shivankshi.emscrud.dao.EmployeeRepository;
 import com.shivankshi.emscrud.entity.Employee;
 
+import Customexception.EmployeeNotFoundException;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -34,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if (result.isPresent()) {
 			employee = result.get();
 		} else {
-			throw new RuntimeException("Employee id not found");
+			throw new EmployeeNotFoundException("Employee does not exists");
 		}
 		return employee;
 	}

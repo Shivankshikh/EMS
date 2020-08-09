@@ -14,34 +14,31 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shivankshi.emscrud.entity.AuthRequest;
 import com.shivankshi.emscrud.util.JwtUtil;
 
-
-
 @RestController
 public class LoginController {
-	 @Autowired
-	    private JwtUtil jwtUtil;
-	    @Autowired
-	    private AuthenticationManager authenticationManager;
+	@Autowired
+	private JwtUtil jwtUtil;
 
-	    @GetMapping("/")
-	    public String welcome() {
-	        return "Welcome to Employee Managment System !!";
-	    }
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-	    @PostMapping("/authenticate")
-	    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
-	    	final Authentication authentication;
-	        try {
-	        	 authentication=
-	            authenticationManager.authenticate(
-	                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-	            );
-	        } catch (BadCredentialsException e) {
-				throw new InvalidUserCredentialsException("Invalid Credentials");
-			}
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
+	@GetMapping("/")
+	public String welcome() {
+		return "Welcome to Employee Managment System !!";
+	}
 
-	        return jwtUtil.generateToken(authentication);
-	    }
+	@PostMapping("/authenticate")
+	public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
+		final Authentication authentication;
+		try {
+			authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+		} catch (BadCredentialsException e) {
+			throw new InvalidUserCredentialsException("Invalid Credentials");
+		}
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		return jwtUtil.generateToken(authentication);
+	}
 
 }
