@@ -61,6 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee2.setSalary(employee.getSalary());
 		} else {
 			throw new EmployeeNotFoundException("Employee id not found");
+
 		}
 		employeeRepository.save(employee2);
 		return employee2;

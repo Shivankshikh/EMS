@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.shivankshi.emscrud.CustomException.EmployeeNotFoundException;
 import com.shivankshi.emscrud.entity.Employee;
 import com.shivankshi.emscrud.service.EmployeeService;
@@ -37,7 +38,7 @@ public class EmployeeRestController {
 	}
 
 	@GetMapping("/employees/{empId}")
-	@ApiOperation(value = "Get Employee by id", notes = "Provide an id to look up specific Employee from the Database", authorizations = {
+  @ApiOperation(value = "Get Employee by id", notes = "Provide an id to look up specific Employee from the Database", authorizations = {
 			@Authorization(value = "JWT") })
 	public Employee getEmployee(@PathVariable int empId) {
 		Employee theEmployee = employeeService.findById(empId);
@@ -48,6 +49,7 @@ public class EmployeeRestController {
 	}
 
 	@PostMapping("/employees")
+
 	@ApiOperation(value = "Add a new Employee", notes = "Provide an Employee", authorizations = {
 			@Authorization(value = "JWT") })
 	public Employee addEmployee(@RequestBody Employee theEmployee) {
@@ -58,6 +60,7 @@ public class EmployeeRestController {
 	}
 
 	@PutMapping("/employees/{empId}")
+
 	@ApiOperation(value = "Update Existing Employee", notes = "Only salary or designation can be updated", authorizations = {
 			@Authorization(value = "JWT") })
 	public Employee updateEmployee(@PathVariable("empId") int empId, @RequestBody Employee theEmployee) {
