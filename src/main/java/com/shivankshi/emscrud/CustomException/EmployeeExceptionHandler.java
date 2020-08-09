@@ -1,4 +1,4 @@
-package Customexception;
+package com.shivankshi.emscrud.CustomException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package Customexception;
+package com.shivankshi.emscrud.CustomException;
 
 public class EmployeeNotFoundException extends RuntimeException {
 

@@ -5,9 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.shivankshi.emscrud.CustomException.EmployeeNotFoundException;
 import com.shivankshi.emscrud.entity.EmployeeErrorResponse;
-
-import Customexception.EmployeeNotFoundException;
 
 @ControllerAdvice
 
