@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shivankshi.emscrud.CustomException.EmployeeNotFoundException;
 import com.shivankshi.emscrud.dao.EmployeeRepository;
 import com.shivankshi.emscrud.entity.Employee;
 
@@ -34,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if (result.isPresent()) {
 			employee = result.get();
 		} else {
-			throw new RuntimeException("Employee id not found");
+			throw new EmployeeNotFoundException("Employee does not exists");
 		}
 		return employee;
 	}
@@ -59,7 +60,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee2.setDesignation(employee.getDesignation());
 			employee2.setSalary(employee.getSalary());
 		} else {
-			throw new RuntimeException("Employee id not found");
+			throw new EmployeeNotFoundException("Employee id not found");
+
 		}
 		employeeRepository.save(employee2);
 		return employee2;
