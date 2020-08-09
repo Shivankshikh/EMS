@@ -40,18 +40,6 @@ public class JwtUtil {
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
-//    public String generateToken(Authentication authentication) {
-//        final String authorities = authentication.getAuthorities().stream()
-//                .map(GrantedAuthority::getAuthority)
-//                .collect(Collectors.joining(","));
-//        return Jwts.builder()
-//                .setSubject(authentication.getName())
-//                .claim(AUTHORITIES_KEY, authorities)
-//                .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS*1000))
-//                .compact();
-//    }
 
     public String generateToken(Authentication authentication) {
         final String authorities= authentication.getAuthorities().stream()
